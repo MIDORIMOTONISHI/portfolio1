@@ -1,20 +1,28 @@
 <%= form_with(model: @user, local: true) do |f| %>
   <%= render 'shared/error_messages' %>
+  
+  <label>
+    <%= f.radio_button :position, "デザイナー" %>デザイナー
+    <%= f.radio_button :position, "カスタマー", {:checked => true} %>カスタマー
+  </label><br>
 
-  <%= f.label "名前", class: "label-#{yield(:class_text)}" %>
+  <%= f.label "名前", class: "label-user" %>
   <%= f.text_field :name, class: "form-control" %>
   
-  <%= f.label "メールアドレス", class: "label-#{yield(:class_text)}" %>
+  <%= f.label "メールアドレス", class: "label-user" %>
   <%= f.email_field :email, class: "form-control" %>
   
-  <%= f.label "所属店舗", class: "label-#{yield(:class_text)}" %>
+  <%= f.label "所属", class: "label-user" %>
   <%= f.text_field :affiliation, class: "form-control" %>
       
-  <%= f.label "パスワード", class: "label-#{yield(:class_text)}" %>
+  <%= f.label "パスワード", class: "label-user" %>
   <%= f.password_field :password, class: "form-control" %>
       
-  <%= f.label "パスワード確認", class: "label-#{yield(:class_text)}" %>
+  <%= f.label "パスワード確認", class: "label-user" %>
   <%= f.password_field :password_confirmation, class: "form-control" %>
+  
+  <%= f.label "プロフィール画像", class: "label-user" %>
+  <%= f.file_field :img %>
       
-  <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
+  <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-user" %>
 <% end %>
