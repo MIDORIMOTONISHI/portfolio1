@@ -1,0 +1,73 @@
+<% provide(:title, 'ユーザー一覧') %>
+
+<div class="user-index-d">
+  <table class="table table-condensed" id="table-users">
+    <h3>Designers</h3>
+    <thead>
+      <tr>
+        <th></th>
+        <th>名前</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+      
+    <% @designers.each do |user| %>
+      <tr>
+        <td>
+          <% if user.img.present? %>
+            <%= image_tag user.img.url %>
+          <% else %>
+            <%= image_tag "/user_images/default.png" %>
+          <% end %>
+        </td>
+        <td><%= link_to user.name, user %></td>
+        <td>
+          <%= link_to "編集", edit_user_path(user), class: "btn btn-success" %>
+        </td>
+        <td>
+          <%= link_to "削除", user, method: :delete,
+                      data: { confirm: "削除してよろしいですか？" },
+                      class: "btn btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+      
+
+<div class="user-index-c">
+    <table class="table table-condensed" id="table-users">
+      <h3>Customers</h3>
+      <thead>
+        <tr>
+          <th></th>
+          <th>名前</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      
+      <% @customers.each do |user| %>
+        <tr>
+          <td>
+            <% if user.img.present? %>
+              <%= image_tag user.img.url %>
+            <% else %>
+              <%= image_tag "/user_images/default.png" %>
+            <% end %>
+          </td>
+          <td><%= link_to user.name, user %></td>
+          <td>
+          <%= link_to "編集", edit_user_path(user), class: "btn btn-success" %>
+        </td>
+        <td>
+          <%= link_to "削除", user, method: :delete,
+                      data: { confirm: "削除してよろしいですか？" },
+                      class: "btn btn-danger" %>
+        </td>
+        </tr>
+      <% end %>
+    </table>
+  <%= will_paginate @customers %>
+</div>
