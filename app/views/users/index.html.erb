@@ -7,6 +7,7 @@
       <tr>
         <th></th>
         <th>名前</th>
+        <th>所属</th>
         <th></th>
         <th></th>
       </tr>
@@ -22,6 +23,7 @@
           <% end %>
         </td>
         <td><%= link_to user.name, user %></td>
+        <td><%= user.affiliation %></td>
         <td>
           <%= link_to "編集", edit_user_path(user), class: "btn btn-success" %>
         </td>
@@ -43,6 +45,7 @@
         <tr>
           <th></th>
           <th>名前</th>
+          <th>所属</th>
           <th></th>
           <th></th>
         </tr>
@@ -58,6 +61,7 @@
             <% end %>
           </td>
           <td><%= link_to user.name, user %></td>
+          <td><%= user.affiliation %></td>
           <td>
           <%= link_to "編集", edit_user_path(user), class: "btn btn-success" %>
         </td>

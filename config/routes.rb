@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   root 'start#top'
   
   get '/login', to: 'sessions#new'
@@ -6,4 +7,5 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   resources :users
+  resources :designs
 end

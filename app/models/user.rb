@@ -1,7 +1,7 @@
 class User < ApplicationRecord
+  has_many :designs, dependent: :destroy
   attr_accessor :remember_token
-  mount_uploader :img, ImgUploader
-  
+  mount_uploader :img, ImgUploader # 画像アップロード
   before_save { self.email = email.downcase }
   
   validates :name, presence: true, length: { maximum: 50 }
