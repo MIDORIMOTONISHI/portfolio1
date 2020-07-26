@@ -4,4 +4,5 @@ class Design < ApplicationRecord
   self.inheritance_column = :_type_disabled
   
   validates :title, presence: true
+  validates :user_id, presence: true
 end

@@ -8,13 +8,13 @@
     <%= render 'shared/error_messages', object: @design %>
     
       <%= f.label "投稿画像", class: "label-user" %>
-      <%= f.file_field :img %>
+      <%= f.file_field :image %>
 
       <%= f.label "タイトル", class: "label-user" %>
       <%= f.text_field :title, class: "form-control" %>
   
       <%= f.label "種類", class: "label-user" %>
-     <%= f.select :type, [['機種訴求'], ['季節-春'], ['季節-夏'], ['季節-秋'], ['季節-冬'], ['似顔絵'], ['コーナー訴求'], ['その他']], { include_blank: true }, class: "form-control" %>
+      <%= f.select :type, [['機種訴求'], ['季節-春'], ['季節-夏'], ['季節-秋'], ['季節-冬'], ['似顔絵'], ['コーナー訴求'], ['その他']], { include_blank: true }, class: "form-control" %>
   
       <%= f.label "機種（複数可）", class: "label-user" %>
       <%= f.text_field :machine, class: "form-control" %>

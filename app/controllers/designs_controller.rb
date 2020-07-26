@@ -1,4 +1,6 @@
 class DesignsController < ApplicationController
+  before_action :set_current_user, only: [:create]
+  
   def index
   end
   
@@ -7,7 +9,13 @@ class DesignsController < ApplicationController
   end
   
   def create
-    @design = Design.new(design_params)
+    @design = Design.new(
+      title: params[:design][:title],
+      image: params[:design][:image],
+      type: params[:design][:type],
+      machine: params[:design][:machine],
+      user_id: @current_user.id
+    )
     if @design.save
       flash[:success] = "デザインを投稿しました。"
       redirect_to designs_url
@@ -32,6 +40,6 @@ class DesignsController < ApplicationController
   private
   
     def design_params
-     params.require(:design).permit(:title, :image, :type, :machine)
+     params.require(:design).permit(:title, :image, :type, :machine, :user_id)
     end
 end

@@ -16,4 +16,8 @@ class ApplicationController < ActionController::Base
   def correct_user
     redirect_to(root_url) unless current_user?(@user) || current_user.admin?
   end
+  
+  def set_current_user
+    @current_user = User.find_by(id: session[:user_id])
+  end
 end
