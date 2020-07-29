@@ -1,0 +1,22 @@
+<% provide(:title, @design.title) %>
+
+<div class="design-show">
+    <h3><%= @design.title %></h3>
+    <%= image_tag @design.image.url %>
+    <p>
+      <%= @design.type %>
+      <% if @design.machine.present? %>
+        ：<%= @design.machine %>
+      <% end %>
+    </p>
+    <p>デザイナー：<%= link_to @user.name, user_path(@user) %></p>
+    <p>作成日：<%= @design.created_at.strftime('%Y/%m/%d') %></p>
+    <%= link_to "注文", "#", class: "btn btn-sm btn-success" %>
+    <% if @design.user_id == current_user.id || current_user.admin? %>
+      <%= link_to "編集", edit_design_path(@design), class: "btn btn-sm btn-primary" %>
+      <%= link_to "削除", design_path(@design.id), method: :delete,
+                        data: { confirm: "削除してよろしいですか？" },
+                        class: "btn btn-danger btn-sm" %>
+    <% end %>
+    <%= link_to "戻る", designs_path, class: "btn btn-sm btn-default" %>
+</div>

@@ -1,7 +1,9 @@
 class DesignsController < ApplicationController
   before_action :set_current_user, only: [:create]
+  before_action :set_design, only: [:show, :destroy, :edit, :update]
   
   def index
+    @designs = Design.all
   end
   
   def new
@@ -25,15 +27,25 @@ class DesignsController < ApplicationController
   end
   
   def show
+    @user = User.find(@design.user_id)
   end
   
   def edit
   end
   
   def update
+    if @design.update_attributes(design_params)
+      flash[:success] = "デザインを更新しました。"
+      redirect_to @design
+    else
+      render :edit
+    end
   end
   
-  def delete
+  def destroy
+    @design.destroy
+    flash[:danger] = "#{@design.title}のデータを削除しました。"
+    redirect_to designs_url
   end
   
   
@@ -41,5 +53,9 @@ class DesignsController < ApplicationController
   
     def design_params
      params.require(:design).permit(:title, :image, :type, :machine, :user_id)
+    end
+    
+    def set_design
+      @design = Design.find(params[:id])
     end
 end

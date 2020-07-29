@@ -1,9 +1,11 @@
-<% provide(:title, 'デザイン投稿') %>
+<% provide(:title, 'デザイン編集') %>
 
-<h1>デザイン投稿</h1>
+<h3>デザイン編集</h3>
 
-<div class="row">
+<div class="design-edit">
   <div class="col-md-6 col-md-offset-3">
+    <div class ="center"><%= image_tag @design.image.url %></div>
+    
     <%= form_with(model: @design, local: true) do |f| %>
     <%= render 'shared/error_messages', object: @design %>
     
@@ -26,7 +28,8 @@
         <%= f.radio_button :machine, "その他未分類" %>その他未分類
       </label><br>
       <div class ="center">
-        <%= f.submit "投稿する", class: "btn btn-primary btn-lg" %>
+        <%= f.submit "編集", class: "btn btn-primary btn-lg" %>
+        <button type="button" class="btn btn-default btn-lg %>" onclick="history.back()" >戻る</button>
       </div>
     <% end %>
   </div>
