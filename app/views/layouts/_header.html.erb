@@ -1,14 +1,6 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <% if logged_in? %>
-      <% if current_user.admin? %>
-        <%= link_to "Design Catalog", users_path, id: "logo" %>
-      <% else %>
-        <%= link_to "Design Catalog", current_user, id: "logo" %>
-      <% end %>
-    <% else %>
-      <%= link_to "Design Catalog", root_path, id: "logo" %>
-    <% end %>
+    <%= link_to "Design Catalog", root_path, id: "logo" %>
     <nav>
       <% if logged_in? %>
         <ul class="nav navbar-nav navbar-right">
@@ -26,15 +18,10 @@
                 <li><%= link_to "個人情報", current_user %></li>
                 <li><%= link_to "編集", edit_user_path(current_user) %></li>
                 <li class="divider"></li>
-                <li><%= link_to "ログアウト", logout_path, method: :delete %></li>
               </ul>
             </li>
+            <li><%= link_to "ログアウト", logout_path, method: :delete %></li>
           <% end %>
-        </ul>  
-      <% else %>
-        <ul class="nav navbar-nav navbar-right">
-          <li><%= link_to "トップへ", root_path %></li>
-          <li><%= link_to "ログイン", login_path %></li>
         </ul>
       <% end %>
     </nav>

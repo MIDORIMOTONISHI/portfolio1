@@ -2,6 +2,11 @@ class User < ApplicationRecord
   has_many :designs, dependent: :destroy
   attr_accessor :remember_token
   mount_uploader :img, ImgUploader # 画像アップロード
+  has_many :likes, dependent: :destroy # いいねボタン
+  has_many :liked_designs, through: :likes, source: :design # いいねボタン
+  def already_liked?(design) # 既にいいねしているかどうかの判定
+    self.likes.exists?(design_id: design.id)
+  end
   before_save { self.email = email.downcase }
   
   validates :name, presence: true, length: { maximum: 50 }

@@ -3,18 +3,29 @@
 <div class="design-index">
   <%= link_to "デザイン投稿", new_design_path, class: "btn btn-lg btn-danger" %><br>
   
-  <table width="50" class="table table-bordered table-condensed" id="design-index">
+  <table class="table table-bordered table-condensed" id="design-index">
     <% @designs.each do |d| %>
       <td>
         <img src="<%= d.image %>"><br>
-        <%= link_to d.title, design_path(d.id) %><br>
-        <%= link_to "注文", "#", class: "btn btn-sm btn-success" %>
+        <%= link_to d.title, order_show_design_path(d.id), remote: true %><br>
         <% if current_user.admin? %>
           <%= link_to "削除", design_path(d.id), method: :delete,
                             data: { confirm: "削除してよろしいですか？" },
                             class: "btn btn-danger btn-sm" %>
         <% end %>
+        
+        <% if current_user.already_liked?(d) %>
+          <h5>いいね！♥</h5>
+        <% else %>
+          <%= button_to 'いいね！♥', design_likes_path(d) %>
+        <% end %>
+        <%= d.liked_users.count %>件
       </td>
     <% end %>
   </table>
 </div>
+
+
+<!--モーダルウインドウ-->
+<!--注文-->
+<div id="order-show" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

@@ -1,9 +1,10 @@
 class DesignsController < ApplicationController
   before_action :set_current_user, only: [:create]
-  before_action :set_design, only: [:show, :destroy, :edit, :update]
+  before_action :set_design, only: [:show, :destroy, :edit, :update, :order_show, :update_order_show]
   
   def index
-    @designs = Design.all
+    @designs = Design.all.order("created_at DESC")
+    @like = Like.new
   end
   
   def new
@@ -28,6 +29,7 @@ class DesignsController < ApplicationController
   
   def show
     @user = User.find(@design.user_id)
+    @like = Like.new
   end
   
   def edit
@@ -46,6 +48,15 @@ class DesignsController < ApplicationController
     @design.destroy
     flash[:danger] = "#{@design.title}のデータを削除しました。"
     redirect_to designs_url
+  end
+  
+  def order_show
+    @user = User.find(@design.user_id)
+    @like = Like.new
+  end
+  
+  def update_order_show
+    @user = User.find(@design.user_id)
   end
   
   

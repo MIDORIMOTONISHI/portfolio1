@@ -7,5 +7,12 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   resources :users
-  resources :designs
+
+  resources :designs do
+    member do
+      get 'order_show'
+      patch 'update_order_show'
+    end
+    resources :likes, only: [:create, :destroy]
+  end
 end

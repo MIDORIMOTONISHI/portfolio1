@@ -76,7 +76,6 @@ p {
 /* top */
 .top-main {
   padding: 200px 0 100px;
-  position: absolute;
   width: 100%;
   height: auto;
   min-height: 100%;
@@ -122,4 +121,11 @@ p {
   .form-control {
     color: $state-danger-text;
   }
+}
+
+/* モーダルウインドウの位置調整 */
+
+.modal-dialog-center {
+  padding-top: 2%;
+  text-align: center;
 }

@@ -2,6 +2,7 @@
 
 <div class="design-show">
     <h3><%= @design.title %></h3>
+    <h6><%= @design.created_at.strftime('%Y/%m/%d') %></h6>
     <%= image_tag @design.image.url %>
     <p>
       <%= @design.type %>
@@ -10,7 +11,6 @@
       <% end %>
     </p>
     <p>デザイナー：<%= link_to @user.name, user_path(@user) %></p>
-    <p>作成日：<%= @design.created_at.strftime('%Y/%m/%d') %></p>
     <%= link_to "注文", "#", class: "btn btn-sm btn-success" %>
     <% if @design.user_id == current_user.id || current_user.admin? %>
       <%= link_to "編集", edit_design_path(@design), class: "btn btn-sm btn-primary" %>
@@ -19,4 +19,11 @@
                         class: "btn btn-danger btn-sm" %>
     <% end %>
     <%= link_to "戻る", designs_path, class: "btn btn-sm btn-default" %>
+    
+    <% if current_user.already_liked?(@design) %>
+      <%= button_to 'いいねを取り消す', design_like_path(@design), method: :delete %>
+    <% else %>
+      <%= button_to 'いいね！♥', design_likes_path(@design) %>
+    <% end %>
+    <h6><%= @design.likes.count %>件</h6>
 </div>
