@@ -7,7 +7,7 @@
     <% @designs.each do |d| %>
       <td>
         <img src="<%= d.image %>"><br>
-        <%= link_to d.title, order_show_design_path(d.id), remote: true %><br>
+        <h4><%= link_to d.title, design_path(d.id) %></h4>
         <% if current_user.admin? %>
           <%= link_to "削除", design_path(d.id), method: :delete,
                             data: { confirm: "削除してよろしいですか？" },
@@ -15,7 +15,7 @@
         <% end %>
         
         <% if current_user.already_liked?(d) %>
-          <h5>いいね！♥</h5>
+          <h5>いいねしました</h5>
         <% else %>
           <%= button_to 'いいね！♥', design_likes_path(d) %>
         <% end %>

@@ -6,13 +6,17 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  resources :users
-
-  resources :designs do
-    member do
-      get 'order_show'
-      patch 'update_order_show'
+  resources :users do
+    resources :designs, only: [:order_show, :update_order_show] do
+      member do
+        get 'designs/order_show'
+        patch 'designs/update_order_show'
+      end
     end
-    resources :likes, only: [:create, :destroy]
   end
+  resources :designs do
+    resources :likes, only: [:create, :destroy]
+    resources :order
+      
+  end  
 end

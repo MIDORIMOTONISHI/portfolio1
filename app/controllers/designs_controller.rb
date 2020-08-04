@@ -1,6 +1,6 @@
 class DesignsController < ApplicationController
   before_action :set_current_user, only: [:create]
-  before_action :set_design, only: [:show, :destroy, :edit, :update, :order_show, :update_order_show]
+  before_action :set_design, only: [:show, :destroy, :edit, :update, :order_show]
   
   def index
     @designs = Design.all.order("created_at DESC")
@@ -51,19 +51,28 @@ class DesignsController < ApplicationController
   end
   
   def order_show
-    @user = User.find(@design.user_id)
+    @designer = User.find(@design.user_id)
     @like = Like.new
   end
   
   def update_order_show
-    @user = User.find(@design.user_id)
+    # @user = User.find(params[:user_id])
+    # @design = @user.designs.find(params[:id])
+    # params[:design][:order_status] = "カート"
+    # @design.update_attributes(order_params)
+    # flash[:success] = "#{@design.title}をカートに入れました。"
+    # redirect_to designs_url
   end
   
   
   private
   
     def design_params
-     params.require(:design).permit(:title, :image, :type, :machine, :user_id)
+      params.require(:design).permit(:title, :image, :type, :machine, :user_id)
+    end
+    
+    def order_params
+      params.require(:design).permit(:size, :hw, :paper, :number, :delivery_date, :note, :order_status)
     end
     
     def set_design
