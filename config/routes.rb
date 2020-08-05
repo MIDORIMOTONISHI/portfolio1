@@ -9,14 +9,12 @@ Rails.application.routes.draw do
   resources :users do
     resources :designs, only: [:order_show, :update_order_show] do
       member do
-        get 'designs/order_show'
-        patch 'designs/update_order_show'
+        get 'order_show'
+        patch 'update_order_show'
       end
     end
   end
   resources :designs do
     resources :likes, only: [:create, :destroy]
-    resources :order
-      
   end  
 end
