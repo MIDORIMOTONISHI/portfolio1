@@ -7,11 +7,16 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   resources :users do
-    resources :designs, only: [:order_show, :update_order_show] do
-      member do
-        get 'order_show'
-        patch 'update_order_show'
-      end
+    member do
+      get 'cart'
+      patch 'update_cart'
+    end
+    resources :designs do
+      resources :orders
+      # member do
+      #   get 'order_show'
+      #   patch 'update_order_show'
+      # end
     end
   end
   resources :designs do

@@ -9,7 +9,10 @@
             <li><%= link_to "ユーザー一覧", users_path %></li>
             <li><%= link_to "ログアウト", logout_path, method: :delete %></li>
           <% else %>
+            <li><%= link_to image_tag("/user_images/cart.png", class: 'cart'), cart_user_path(current_user) %></li>
             <li><%= link_to "カタログ", designs_path %></li>
+            
+            <!--<　%= link_to image_tag("img_logo.png", class:"image_switch"), "/" %>-->
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 アカウント <b class="caret"></b>
@@ -21,6 +24,7 @@
               </ul>
             </li>
             <li><%= link_to "ログアウト", logout_path, method: :delete %></li>
+            
           <% end %>
         </ul>
       <% end %>

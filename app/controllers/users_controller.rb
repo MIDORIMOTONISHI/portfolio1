@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :cart, :update_cart]
   before_action :logged_in_user, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy]
@@ -43,6 +43,15 @@ class UsersController < ApplicationController
     @user.destroy
     flash[:danger] = "#{@user.name}のデータを削除しました。"
     redirect_to users_url
+  end
+  
+  
+    # 注文カート
+  def cart
+    @orders = Order.where(order_status: "カートへ", user_id: current_user.id)
+  end
+  
+  def update_cart
   end
   
   private

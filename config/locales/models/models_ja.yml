@@ -11,3 +11,15 @@ ja:
           password_confirmation: パスワード再入力
           created_at: 作成日
           updated_at: 更新日
+ja:
+  activerecord:
+      models:
+        order: 注文
+      attributes:
+          order:
+            size: サイズ
+            hw: 方向
+            paper: 紙の種類
+            number: 枚数
+            delivery_date: 納品日
+            note: 備考

@@ -51,6 +51,7 @@ class DesignsController < ApplicationController
     redirect_to designs_url
   end
   
+  # 注文ページ
   def order_show
     @user = User.find(current_user.id)
     @designer = User.find(@design.user_id)
@@ -63,8 +64,8 @@ class DesignsController < ApplicationController
     flash[:success] = "#{@design.title}をカートに入れました。"
     redirect_to designs_url
   end
-  
-  
+
+
   private
   
     def design_params
