@@ -1,42 +1,43 @@
 <% provide(:title, "発注カート") %>
 
-<h1>発注カート</h1>
+<h1>発注カート</h1><br>
 
 <div>
-  <table class="table table-bordered table-condensed table-hover" id="table-attendances">
+  <table class="table table-bordered table-condensed table-hover" id="table-cart">
     <thead>
       <tr>
-        <th>発注日</th>
         <th>タイトル</th>
         <th>デザイン</th>
         <th>サイズ</th>
         <th>方向</th>
         <th>紙の種類</th>
         <th>枚数</th>
-        <th>納品日</th>
         <th>備考</th>
+        <th>発注日</th>
+        <th>納品日</th>
         <th></th>
       </tr>
     </thead>
     <% if @orders_count != 0 %>
-      <% @orders.each do |o| %>
+      <% @orders.each do |id, order| %>
         <tbody>
           <tr>
-            <td><%= o.created_at.strftime('%m/%d') %></td>
-            <td></td>
-            <td></td>
-            <td><%= o.size %></td>
-            <td><%= o.hw %></td>
-            <td><%= o.paper %></td>
-            <td><%= o.number %></td>
-            <td><%= o.delivery_date.strftime('%m/%d') %></td>
-            <td><%= o.note %></td>
-            <td>
-              <%= link_to "編集", "#", class: "btn btn-sm btn-primary" %>
-              <%= link_to "削除", "#", method: :delete,
-                        data: { confirm: "削除してよろしいですか？" },
-                        class: "btn btn-danger btn-sm" %>
-            </td>
+            <td><%= Design.find(id).title %></td>
+            <td><%= image_tag Design.find(id).image.url %></td>
+            <% order.each do |o| %>
+              <td><%= o.size %></td>
+              <td><%= o.hw %></td>
+              <td><%= o.paper %></td>
+              <td><%= o.number %></td>
+              <td><%= o.note %></td>
+              <td><%= o.created_at.strftime('%m/%d') %></td>
+              <td><%= o.delivery_date.strftime('%m/%d') %></td>
+              <td>
+                <%= link_to "削除", "#", method: :delete,
+                          data: { confirm: "削除してよろしいですか？" },
+                          class: "btn btn-danger btn-sm" %>
+              </td>
+            <% end %>
           </tr>
         </tbody>
       <% end %>
@@ -44,5 +45,8 @@
       <% flash.now[:danger] = "カートに入っているデザインはありません。" %>
     <% end %>
   </table>
+  <div class="center">
+    <%= link_to "編集", orders_edit_cart_user_path(@user), class: "btn btn-lg btn-primary" %>
+    <%= link_to "注文", cart_user_path(@user), class: "btn btn-lg btn-success" %>
+  </div>
 </div>
-

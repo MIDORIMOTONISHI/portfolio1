@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :cart, :update_cart]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :cart, :edit_cart, :update_cart]
   before_action :logged_in_user, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy]
@@ -48,9 +48,9 @@ class UsersController < ApplicationController
   
     # 注文カート
   def cart
-    @orders = Order.where(order_status: "カートへ", user_id: current_user.id)
+    @orders = Order.where(order_status: "カートへ", user_id: current_user.id).order(created_at: "ASC").group_by(&:design_id)
   end
-  
+
   def update_cart
   end
   

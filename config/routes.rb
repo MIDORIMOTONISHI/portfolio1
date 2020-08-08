@@ -10,13 +10,16 @@ Rails.application.routes.draw do
     member do
       get 'cart'
       patch 'update_cart'
+      get 'orders/edit_cart'
+      patch 'orders/update_cart'
     end
     resources :designs do
-      resources :orders
-      # member do
-      #   get 'order_show'
-      #   patch 'update_order_show'
-      # end
+      resources :orders do
+        collection do
+          get 'order_show'
+          post 'create_order_show'
+        end
+      end
     end
   end
   resources :designs do

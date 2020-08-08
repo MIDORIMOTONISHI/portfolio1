@@ -10,7 +10,7 @@
     </h6>
     <h6>デザイナー：<%= link_to @designer.name, user_path(@designer) %>　作成日：<%= @design.created_at.strftime('%Y/%m/%d') %></h6>
     <%= image_tag @design.image.url %><br>
-    <%= link_to "注文", new_user_design_order_path(@user, @design), class: "btn btn-sm btn-success" %>
+    <%= link_to "注文", order_show_user_design_orders_path(@user, @design), remote: true, class: "btn btn-sm btn-success" %>
     <% if @design.user_id == current_user.id || current_user.admin? %>
       <%= link_to "編集", edit_design_path(@design), class: "btn btn-sm btn-primary" %>
       <%= link_to "削除", design_path(@design.id), method: :delete,
@@ -29,4 +29,4 @@
 
 <!--モーダルウインドウ-->
 <!--注文-->
-<!--<div id="order-show" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>-->
+<div id="order-show" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
