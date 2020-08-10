@@ -5,6 +5,7 @@ class DesignsController < ApplicationController
   def index
     @designs = Design.all.order("created_at DESC")
     @like = Like.new
+    @order_notice = Order.where(order_status: "発注").count
   end
   
   def new

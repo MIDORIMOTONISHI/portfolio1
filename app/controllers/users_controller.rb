@@ -48,15 +48,38 @@ class UsersController < ApplicationController
   
     # 注文カート
   def cart
-    @orders = Order.where(order_status: "カートへ", user_id: current_user.id).order(created_at: "ASC").group_by(&:design_id)
+    @orders = Order.where(order_status: "カートへ", user_id: current_user.id).order(created_at: "ASC")
   end
 
   def update_cart
+    ActiveRecord::Base.transaction do
+      cart_params.each do |id, item|
+        order = Order.find(id)
+        order.update_attributes!(item)
+      end
+    end
+    flash[:success] = "カートの内容を発注しました。"
+    redirect_to designs_url
+  rescue ActiveRecord::RecordInvalid # トランザクション
+    flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+    redirect_to  cart_user_url(@user)
+  end
+  
+    #注文受領
+  def order_consent
+    @orders = Order.where(order_status: "発注").order(created_at: "ASC").group_by(&:user_id)
+  end
+  
+  def update_order_consent
   end
   
   private
   
     def user_params
      params.require(:user).permit(:name, :email, :affiliation, :password, :password_confirmation, :img)
+    end
+    
+    def cart_params
+      params.require(:user).permit(orders: [:order_status])[:orders]
     end
 end

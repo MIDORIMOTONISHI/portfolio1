@@ -26,14 +26,28 @@ class OrdersController < ApplicationController
   end
   
   def destroy
+    @order = Order.find(params[:id])
+    @order.destroy
+    flash[:danger] = "注文を削除しました。"
+    redirect_to cart_user_url(current_user)
   end
   
   def edit_cart
-    @orders = Order.where(order_status: "カートへ", user_id: current_user.id).order(created_at: "ASC").group_by(&:design_id)
+    @orders = Order.where(order_status: "カートへ", user_id: current_user.id).order(created_at: "ASC")
   end
   
   def update_cart
-  
+    ActiveRecord::Base.transaction do
+      cart_params.each do |id, item|
+        order = Order.find(id)
+        order.update_attributes!(item)
+      end
+    end
+    flash[:success] = "カートの内容を更新しました。"
+    redirect_to cart_user_url(@user)
+  rescue ActiveRecord::RecordInvalid # トランザクション
+    flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+    redirect_to  orders_edit_cart_user_url(@user)
   end
   
   private

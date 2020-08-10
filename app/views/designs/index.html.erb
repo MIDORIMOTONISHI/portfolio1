@@ -1,7 +1,16 @@
 <% provide(:title, "カタログ") %>
 
 <div class="design-index">
-  <%= link_to "デザイン投稿", new_design_path, class: "btn btn-lg btn-danger" %><br>
+  <% if current_user.position == "デザイナー" %>
+    <%= link_to "デザイン投稿", new_design_path, class: "btn btn-lg btn-danger" %>
+  <% else current_user.admin? %>
+    <%= link_to "発注確認", order_consent_users_path, class: "btn btn-lg btn-success" %>
+    <% if @order_notice != 0 %>
+      <p class="notice">未受領の発注が<%= @order_notice %>件あります</p>
+    <% else %>
+      <p>未受領の発注はありません</p>    
+    <% end %>
+  <% end %><br>
   
   <table class="table table-bordered table-condensed" id="design-index">
     <% @designs.each do |d| %>
