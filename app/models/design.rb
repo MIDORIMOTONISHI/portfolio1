@@ -10,4 +10,11 @@ class Design < ApplicationRecord
   validates :title, presence: true, uniqueness: true
   validates :user_id, presence: true
   
+  def self.search(search)
+    if search
+      Design.where(['title LIKE ?', "%#{search}%"])
+    else
+      Design.all
+    end
+  end
 end

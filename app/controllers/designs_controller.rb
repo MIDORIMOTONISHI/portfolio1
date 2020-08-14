@@ -3,9 +3,12 @@ class DesignsController < ApplicationController
   before_action :set_design, only: [:show, :destroy, :edit, :update, :order_show, :update_order_show]
   
   def index
-    @designs = Design.all.order("created_at DESC")
+    @designs = Design.paginate(page: params[:page], per_page: 10).search(params[:search]).order("created_at DESC")
+    # @designs = Design.paginate(page: params[:page], per_page: 10).order("created_at DESC")
     @like = Like.new
     @order_notice = Order.where(order_status: "発注").count
+    @designer_notice = Order.where(order_status: "受注").where(designer_id: current_user.id).count
+    @customer_notice = Order.where(order_status: "発送済").where(user_id: current_user.id).count
   end
   
   def new
@@ -52,20 +55,10 @@ class DesignsController < ApplicationController
     redirect_to designs_url
   end
   
-  # 注文ページ
-  def order_show
-    @user = User.find(current_user.id)
-    @designer = User.find(@design.user_id)
+  def search
+    @designs = Design.search(params[:search])
   end
   
-  def update_order_show
-    @user = User.find(current_user.id)
-    params[:design][:order_status] = "注文中"
-    @design.update_attributes(order_params)
-    flash[:success] = "#{@design.title}をカートに入れました。"
-    redirect_to designs_url
-  end
-
 
   private
   

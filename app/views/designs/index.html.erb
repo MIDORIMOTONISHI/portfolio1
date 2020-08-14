@@ -1,37 +1,91 @@
 <% provide(:title, "カタログ") %>
 
 <div class="design-index">
-  <% if current_user.position == "デザイナー" %>
-    <%= link_to "デザイン投稿", new_design_path, class: "btn btn-lg btn-danger" %>
-  <% else current_user.admin? %>
-    <%= link_to "発注確認", order_consent_users_path, class: "btn btn-lg btn-success" %>
-    <% if @order_notice != 0 %>
-      <p class="notice">未受領の発注が<%= @order_notice %>件あります</p>
-    <% else %>
-      <p>未受領の発注はありません</p>    
-    <% end %>
-  <% end %><br>
+  <div class="col-md-10 col-md-offset-1">
+    <h1>カタログ一覧</h1><br>
+    
+    <% if current_user.admin? %>
+      <%= link_to "発注確認", order_consent_user_path(current_user), class: "btn btn-lg btn-success" %>
+      <% if @order_notice != 0 %>
+        <p class="notice">未受注の発注が<%= @order_notice %>件あります</p>
+      <% else %>
+        <p>未受注の発注はありません</p>    
+      <% end %>
+    <% elsif current_user.position == "デザイナー"%>
+      <%= link_to "発送確認", order_sending_user_path(current_user), class: "btn btn-lg btn-success" %>
+      <% if @designer_notice != 0 %>
+        <p class="notice">未発送の発注が<%= @designer_notice %>件あります</p>
+      <% else %>
+        <p>未発送の発注はありません</p>    
+      <% end %>
+    <% elsif current_user.position == "カスタマー"%>
+      <%= link_to "納品確認", order_receiving_user_path(current_user), class: "btn btn-lg btn-success" %>
+      <% if @customer_notice != 0 %>
+        <p class="notice">未納品の発注が<%= @customer_notice %>件あります</p>
+      <% else %>
+        <p>未納品の発注はありません</p>    
+      <% end %>
+    <% end %><br>
+    
+    <div class="pull-right">
+      <p>タイトル検索</p>
+        <%= form_tag(designs_path,:method => 'get') do %>
+          <%= text_field_tag :search %>
+          <%= submit_tag '検索', :title => nil, class: "btn btn-primary btn-sm" %>
+        <% end %>
+    </div>
+    
   
-  <table class="table table-bordered table-condensed" id="design-index">
-    <% @designs.each do |d| %>
-      <td>
-        <img src="<%= d.image %>"><br>
-        <h4><%= link_to d.title, design_path(d.id) %></h4>
-        <% if current_user.admin? %>
-          <%= link_to "削除", design_path(d.id), method: :delete,
-                            data: { confirm: "削除してよろしいですか？" },
-                            class: "btn btn-danger btn-sm" %>
-        <% end %>
-        
-        <% if current_user.already_liked?(d) %>
-          <h5>いいねしました</h5>
-        <% else %>
-          <%= button_to 'いいね！♥', design_likes_path(d) %>
-        <% end %>
-        <%= d.liked_users.count %>件
-      </td>
-    <% end %>
-  </table>
+  <%= will_paginate %>
+    <table class="table table-bordered table-condensed" id="design-index">
+      <% @designs.each do |d| %>
+        <tr align="left">
+          <th colspan="4" width="400" bgcolor="#EEEEEE">
+            <h4>
+              ◆No.<%= d.id %>
+              <%= link_to d.title, design_path(d.id) %></h4></th>
+        </tr>
+        <tr>
+          <td rowspan="2"><img src="<%= d.image %>"></td>
+          <td width="40%">ジャンル：<%= d.type %>
+            <% if d.machine.present? %>
+            　機種：<%= d.machine %>
+            <% end %>
+          </td>
+          <td width="30%">デザイナー：<%= link_to User.find(d.user_id).name, user_path(d.user_id) %></td>
+          <td width="30%">作成日：<%= d.created_at.strftime('%Y/%m/%d') %></td>
+        </tr>
+        <tr>
+          <td>
+            <% if current_user.already_liked?(d) %>
+              <h5>いいねしました　<%= d.liked_users.count %>件</h5>
+            <% else %>
+              <%= button_to 'いいね！♥', design_likes_path(d) %>
+            <% end %>
+            
+          </td>
+          <td>
+            <% if current_user.position == "カスタマー" %>
+              <%= link_to "発注", order_show_user_design_orders_path(current_user.id, d.id), remote: true, class: "btn btn-md btn-success" %>
+            <% end %>
+          </td>
+          <td>
+            <% if d.user_id == current_user.id || current_user.admin? %>
+              <%= link_to "編集", edit_design_path(d.id), class: "btn btn-md btn-primary" %>
+              <%= link_to "削除", design_path(d.id), method: :delete,
+                                data: { confirm: "削除してよろしいですか？" },
+                                class: "btn btn-danger btn-md" %>
+            <% else %>
+            　
+              <!--< %= button_to "削除", "#", method: :delete, :disabled=>true,-->
+              <!--                  class: "btn btn-danger btn-md display: inline" %>-->
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <%= will_paginate %>
+  </div>
 </div>
 
 

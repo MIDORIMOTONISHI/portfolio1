@@ -39,6 +39,7 @@
                              class: "btn btn-danger btn-sm" %>
                 </td>
                 <%= o.hidden_field :order_status, value: "発注" %>
+                <%= o.hidden_field :designer_id, value: Design.find(order.design_id).user_id %>
               </tr>
             </tbody>
           <% end %>

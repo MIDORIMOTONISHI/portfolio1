@@ -7,15 +7,20 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   resources :users do
-    collection do
-      get 'order_consent'
-      patch 'update_order_consent'
-    end
     member do
       get 'cart'
       patch 'update_cart'
       get 'orders/edit_cart'
       patch 'orders/update_cart'
+      get 'order_consent'
+      patch 'update_order_consent'
+      get 'order_sending'
+      patch 'update_order_sending'
+      get 'order_receiving'
+      patch 'update_order_receiving'
+      get 'admin_order_log'
+      get 'designer_order_log'
+      get 'customer_order_log'
     end
     resources :designs do
       resources :orders do

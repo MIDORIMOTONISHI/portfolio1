@@ -4,19 +4,12 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h1 class="modal-title">デザイン注文</h1>
+        <h1 class="modal-title">デザイン発注</h1>
       </div>
       <div class="modal-body">
         <div class="row design-order">
           <div class="col-md-10 col-md-offset-1">
-            <h3><%= @design.title %></h3>
-              <h6>
-                <%= @design.type %>
-                <% if @design.machine.present? %>
-                  ：<%= @design.machine %>
-                <% end %>
-              </h6>
-              <h6>デザイナー：<%= link_to @designer.name, user_path(@user) %>　作成日：<%= @design.created_at.strftime('%Y/%m/%d') %></h6>
+            <h3>◆No.<%= @design.id %> <%= @design.title %></h3>
               <%= image_tag @design.image.url %><br>
 
               <%= form_with(model: @order, url: create_order_show_user_design_orders_path(@user, @design), local: true, method: :post) do |f| %>

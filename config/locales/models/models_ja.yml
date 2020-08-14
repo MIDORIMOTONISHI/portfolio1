@@ -2,32 +2,25 @@ ja:
   activerecord:
     models:
       user: ユーザー
+      design: デザイン
+      order: 注文
     attributes:
         user:
           id: ID
           name: 名前
           email: メールアドレス
+          position: ポジション
           password: パスワード
           password_confirmation: パスワード再入力
           created_at: 作成日
           updated_at: 更新日
-ja:
-  activerecord:
-      models:
-        design: デザイン
-      attributes:
-          design:
-            title: タイトル
-            image: 画像
-ja:
-  activerecord:
-      models:
-        order: 注文
-      attributes:
-          order:
-            size: サイズ
-            hw: 方向
-            paper: 紙の種類
-            number: 枚数
-            delivery_date: 納品日
-            note: 備考
+        design:
+          title: タイトル
+          image: 画像
+        order:
+          size: サイズ
+          hw: 方向
+          paper: 紙の種類
+          number: 枚数
+          delivery_date: 納品日
+          note: 備考

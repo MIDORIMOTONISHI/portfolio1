@@ -1,5 +1,5 @@
 .design-index img {
-  width: 148px;
+  height: 100px;
 }
 
 #design-index{
@@ -7,6 +7,10 @@
     vertical-align: middle;
     text-align: center;
   }
+}
+
+#design-index{
+  border-spacing: 8px 0px;
 }
 
 .design-show{
@@ -28,7 +32,7 @@
 }
 
 .design-show img {
-  width: 210px;
+  width: 300px;
 }
 
 .design-edit img {
