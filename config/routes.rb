@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   post '/callback' => 'linebot#callback'
+  get '/line', to: 'sessions#line'
 
   resources :users do
     member do
