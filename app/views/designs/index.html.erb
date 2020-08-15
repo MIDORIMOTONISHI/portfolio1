@@ -9,26 +9,26 @@
       <% if @order_notice != 0 %>
         <p class="notice">未受注の発注が<%= @order_notice %>件あります</p>
       <% else %>
-        <p>未受注の発注はありません</p>    
+        <p class="not-notice">未受注の発注はありません</p>    
       <% end %>
     <% elsif current_user.position == "デザイナー"%>
       <%= link_to "発送確認", order_sending_user_path(current_user), class: "btn btn-lg btn-success" %>
       <% if @designer_notice != 0 %>
         <p class="notice">未発送の発注が<%= @designer_notice %>件あります</p>
       <% else %>
-        <p>未発送の発注はありません</p>    
+        <p class="not-notice">未発送の発注はありません</p>    
       <% end %>
     <% elsif current_user.position == "カスタマー"%>
       <%= link_to "納品確認", order_receiving_user_path(current_user), class: "btn btn-lg btn-success" %>
       <% if @customer_notice != 0 %>
         <p class="notice">未納品の発注が<%= @customer_notice %>件あります</p>
       <% else %>
-        <p>未納品の発注はありません</p>    
+        <p class="not-notice">未納品の発注はありません</p>    
       <% end %>
     <% end %><br>
     
     <div class="pull-right">
-      <p>タイトル検索</p>
+      <p class="search">タイトル検索</p>
         <%= form_tag(designs_path,:method => 'get') do %>
           <%= text_field_tag :search %>
           <%= submit_tag '検索', :title => nil, class: "btn btn-primary btn-sm" %>

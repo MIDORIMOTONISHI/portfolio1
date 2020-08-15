@@ -1,8 +1,12 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :cart, :update_cart]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :cart, :update_cart, :order_consent, :update_order_consent,
+                                  :order_sending, :update_order_sending, :order_receiving, :update_order_receiving,
+                                  :admin_order_log, :designer_order_log, :customer_order_log]
   before_action :logged_in_user, only: [:show, :edit, :update, :destroy]
-  before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:destroy]
+  before_action :correct_user, only: [:edit, :update, :cart, :update_cart, :order_sending, :update_order_sending,
+                                      :order_sending, :update_order_sending, :order_receiving, :update_order_receiving,
+                                      :admin_order_log, :designer_order_log, :customer_order_log]
+  before_action :admin_user, only: [:destroy, :index, :order_consent, :update_order_consent, :admin_order_log]
   
   def index
     @designers = User.where(position: "デザイナー")
@@ -69,11 +73,9 @@ class UsersController < ApplicationController
     #発注確認
   def order_consent
     @orders = Order.where(order_status: "発注").order(created_at: "ASC").group_by(&:user_id)
-    @user = User.find(current_user.id)
   end
   
   def update_order_consent
-    @user = User.find(current_user.id)
     ActiveRecord::Base.transaction do
       consent_params.each do |id, item|
         if item[:receipt] == "true"
@@ -94,12 +96,10 @@ class UsersController < ApplicationController
   
     #発送確認  
   def order_sending
-    @user = User.find(current_user.id)
     @orders = Order.where(order_status: "受注").where(designer_id: @user.id).order(created_at: "ASC").group_by(&:user_id)
   end
 
   def update_order_sending
-    @user = User.find(current_user.id)
     ActiveRecord::Base.transaction do
       sending_params.each do |id, item|
         if item[:sending] == "true"
@@ -120,12 +120,10 @@ class UsersController < ApplicationController
   
     #納品確認  
   def order_receiving
-    @orders = Order.where(order_status: "発送済").where(user_id: current_user.id).order(created_at: "ASC").group_by(&:user_id)
-    @user = User.find(current_user.id)
+    @orders = Order.where.not(order_status: ["カートへ","納品済"]).where(user_id: current_user.id).order(created_at: "ASC").group_by(&:user_id)
   end
 
   def update_order_receiving
-    @user = User.find(current_user.id)
     ActiveRecord::Base.transaction do
       receiving_params.each do |id, item|
         if item[:receiving] == "true"
@@ -146,18 +144,45 @@ class UsersController < ApplicationController
   
    # 発注ログ
   def admin_order_log
-    @orders = Order.where(order_status: ["受注","発送済","納品済"]).order(created_at: "ASC").group_by(&:user_id)
-    @user = User.find(current_user.id)
+    if params[:search].blank?
+      @orders = Order.where.not(order_status: "カートへ").order(created_at: "ASC").group_by(&:user_id)
+    else
+      select_day = params[:search]["created_at(1i)"] + "-" + format("%02d", params[:search]["created_at(2i)"]) + "-" + format("%02d", params[:search]["created_at(3i)"])
+      first_day = select_day.to_date.beginning_of_month
+      last_day = first_day.end_of_month
+      @orders = Order.where(created_at: first_day..last_day).where.not(order_status: "カートへ").order(created_at: "ASC").group_by(&:user_id)
+      if @orders.count == 0
+        flash.now[:danger] = "発注履歴はありません。"
+      end
+    end
   end
   
   def designer_order_log
-    @user = User.find(current_user.id)
-    @orders = Order.where(order_status: ["発送済","納品済"]).where(designer_id: @user.id).order(created_at: "ASC").group_by(&:user_id)
+    if params[:search].blank?
+      @orders = Order.where(order_status: ["発送済","納品済"]).where(designer_id: @user.id).order(created_at: "ASC").group_by(&:user_id)
+    else
+      select_day = params[:search]["created_at(1i)"] + "-" + format("%02d", params[:search]["created_at(2i)"]) + "-" + format("%02d", params[:search]["created_at(3i)"])
+      first_day = select_day.to_date.beginning_of_month
+      last_day = first_day.end_of_month
+      @orders = Order.where(created_at: first_day..last_day).where(order_status: ["発送済","納品済"]).where(designer_id: @user.id).order(created_at: "ASC").group_by(&:user_id)
+      if @orders.count == 0
+        flash.now[:danger] = "発送履歴はありません。"
+      end
+    end
   end
   
   def customer_order_log
-    @user = User.find(current_user.id)
-    @orders = Order.where(order_status: ["受注","発送済","納品済"]).where(user_id: @user.id).order(created_at: "ASC").group_by(&:user_id)
+    if params[:search].blank?
+      @orders = Order.where.not(order_status: "カートへ").where(user_id: @user.id).order(created_at: "ASC").group_by(&:user_id)
+    else
+      select_day = params[:search]["created_at(1i)"] + "-" + format("%02d", params[:search]["created_at(2i)"]) + "-" + format("%02d", params[:search]["created_at(3i)"])
+      first_day = select_day.to_date.beginning_of_month
+      last_day = first_day.end_of_month
+      @orders = Order.where(created_at: first_day..last_day).where.not(order_status: "カートへ").where(user_id: @user.id).order(created_at: "ASC").group_by(&:user_id)
+      if @orders.count == 0
+        flash.now[:danger] = "発注履歴はありません。"
+      end
+    end
   end
   
   private

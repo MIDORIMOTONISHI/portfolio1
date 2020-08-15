@@ -4,11 +4,10 @@ class DesignsController < ApplicationController
   
   def index
     @designs = Design.paginate(page: params[:page], per_page: 10).search(params[:search]).order("created_at DESC")
-    # @designs = Design.paginate(page: params[:page], per_page: 10).order("created_at DESC")
     @like = Like.new
     @order_notice = Order.where(order_status: "発注").count
     @designer_notice = Order.where(order_status: "受注").where(designer_id: current_user.id).count
-    @customer_notice = Order.where(order_status: "発送済").where(user_id: current_user.id).count
+    @customer_notice = Order.where.not(order_status: ["カートへ","納品済"]).where(user_id: current_user.id).count
   end
   
   def new
@@ -53,10 +52,6 @@ class DesignsController < ApplicationController
     @design.destroy
     flash[:danger] = "#{@design.title}のデータを削除しました。"
     redirect_to designs_url
-  end
-  
-  def search
-    @designs = Design.search(params[:search])
   end
   
 

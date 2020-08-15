@@ -13,6 +13,7 @@ class Design < ApplicationRecord
   def self.search(search)
     if search
       Design.where(['title LIKE ?', "%#{search}%"])
+      
     else
       Design.all
     end
