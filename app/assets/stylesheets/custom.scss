@@ -68,6 +68,10 @@ p {
   font-weight: bold;
 }
 
+.logo img {
+  margin-top: 10px;
+}
+
 #logo:hover {
   color: #fff;
   text-decoration: none;
@@ -92,10 +96,9 @@ p {
   font-family: serif;
 }
 
-.top-main img {
-  height: 50px;
+.top-table {
+  border: 0px none;
 }
-
 
 /* debug */
 
@@ -136,4 +139,31 @@ p {
 
 .cart{
   width: 25px;
+}
+
+.line {
+  padding: 200px 0 100px;
+  width: 100%;
+  height: auto;
+  display: inline;
+  text-align: center;
+}
+
+
+.line-title {
+  background-image: url("/user_images/aki02.jpg");  /* 表示する画像 */
+  width:  180px;       /* ※縦横を同値に */
+  height: 180px;       /* ※縦横を同値に */
+  border-radius: 20%;  /* 角丸半径を50%にする(=円形にする) */
+  background-position: center center;  /* 横長画像の左上を基準に表示 */
+  display: inline-block;          /* 複数の画像を横に並べたい場合 */
+  background-size:cover;
+  text-align: center;
+}
+
+.line-logo {
+  font-size: 2em;
+  letter-spacing: -1px;
+  font-weight: bold;
+  margin-top: -10px;
 }

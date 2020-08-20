@@ -1,6 +1,24 @@
 <% provide(:title, "LINEお友達登録") %>
 
-<div class="design-show">
-  <%= image_tag "/user_images/qr.png" %>
-  <%= link_to "戻る", root_path, class: "btn btn-lg btn-default" %>
+<div class="line">
+  <div class="center jumbotron">
+    <table class="table table-condensed top-table">
+      <tr>
+        <td><%= image_tag "/user_images/line.png", size: '140x65', class: "top-line" %></td>
+      </tr>
+      <tr>
+        <td><%= image_tag "/user_images/logo-s.png", size: '496x93' %></td>
+      </tr>
+      <tr>
+        <td><%= image_tag "/user_images/DC.png", size: '240x240' %>　<%= image_tag "/user_images/qr.png", size: '250x250' %></td>
+      </tr>
+      <tr>
+        
+      </tr>
+        <td>デザインのアンケートやカタログ更新のお知らせを配信中♪<br>QRコードを読み取ってお友達に追加して下さい。</td>
+      <tr>
+        <td><%= link_to "戻る", root_path, class: "btn btn-lg btn-default" %></td>
+      </tr>
+    </table>
+  </div>
 </div>

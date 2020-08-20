@@ -1,9 +1,20 @@
 <% provide(:title, "Top") %>
 <div class="main top-main">
   <div class="center jumbotron">
-    <h1 class="top-logo">Design Catalog</h1>
-    <%= link_to "ログイン", login_path, class: "btn btn-lg btn-info" %><br><br>
-    <p>新規登録は<%= link_to "こちら", new_user_path %></p>
-    <%= link_to image_tag("/user_images/line.png"), line_path %>
+    <table class="table table-condensed top-table">
+      <tr>
+        <td rowspan="3"><%= image_tag "/user_images/DC.png", size: '250x250' %></td>
+        <td><%= image_tag "/user_images/logo-s.png", size: '496x93' %></td>
+      </tr>
+      <tr>
+        <td>
+          <%= link_to "ログイン", login_path, class: "btn btn-lg btn-info" %>
+          <%= link_to "新規登録", new_user_path, class: "btn btn-lg btn-default" %>
+        </td>
+      </tr>
+      <tr>
+        <td><%= link_to image_tag("/user_images/line.png", size: '140x65'), line_path, class: "top-line" %></td>
+      </tr>
+    </table>
   </div>
 </div>
