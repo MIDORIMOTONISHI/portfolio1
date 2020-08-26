@@ -30,7 +30,11 @@
                 <td><%= ord.hw %></td>
                 <td><%= ord.paper %></td>
                 <td><%= ord.number %></td>
-                <td><%= ord.note %></td>
+                <td>
+                  <% if ord.note.present? %>
+                    <%= ord.note %>
+                  <% end %>
+                </td>
                 <td><%= ord.created_at.strftime('%m/%d') %></td>
                 <td><%= ord.delivery_date.strftime('%m/%d') %></td>
                 <td><%= o.check_box :sending, {class: "check_box"}, true, false %></td>

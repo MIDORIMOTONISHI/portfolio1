@@ -12,7 +12,7 @@ class Design < ApplicationRecord
   
   def self.search(search)
     if search
-      Design.where(['title LIKE ?', "%#{search}%"])
+      Design.where('title LIKE ? OR type LIKE ? OR machine LIKE ?', "%#{search}%", "%#{search}%", "%#{search}%")
       
     else
       Design.all

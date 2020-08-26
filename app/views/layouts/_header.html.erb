@@ -14,12 +14,11 @@
             <li><%= link_to "デザイン投稿", new_design_path %></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                マイページ<b class="caret"></b>
+                <%= User.find(current_user.id).position %>：<%= User.find(current_user.id).name %><b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
                 <li><%= link_to "発送履歴", designer_order_log_user_path(current_user) %></li>
                 <li><%= link_to "個人情報", current_user %></li>
-                <li><%= link_to "編集", edit_user_path(current_user) %></li>
                 <li class="divider"></li>
               </ul>
             </li>
@@ -29,12 +28,11 @@
             <li><%= link_to "カタログ", designs_path %></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                マイページ<b class="caret"></b>
+                <%= User.find(current_user.id).position %>：<%= User.find(current_user.id).name %><b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
                 <li><%= link_to "発注履歴", customer_order_log_user_path(current_user) %></li>
                 <li><%= link_to "個人情報", current_user %></li>
-                <li><%= link_to "編集", edit_user_path(current_user) %></li>
                 <li class="divider"></li>
               </ul>
             </li>

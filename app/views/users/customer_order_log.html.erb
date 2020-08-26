@@ -23,6 +23,7 @@
             <th width="110px">紙の種類</th>
             <th width="60px">枚数</th>
             <th>備考</th>
+            <th>金額</th>
             <th width="80px">発注日</th>
             <th width="80px">納品日</th>
             <th width="80px">状態</th>
@@ -36,13 +37,24 @@
               <td><%= ord.hw %></td>
               <td><%= ord.paper %></td>
               <td><%= ord.number %></td>
-              <td><%= ord.note %></td>
+              <td>
+                  <% if ord.note.present? %>
+                    <%= ord.note %>
+                  <% end %>
+              </td>
+              <td>
+                <%= price = price_one(ord.size, ord.number) %>円
+                <% @total_prices = @total_prices.to_f + price.to_f %>
+              </td>
               <td><%= ord.created_at.strftime('%m/%d') %></td>
               <td><%= ord.delivery_date.strftime('%m/%d') %></td>
               <td><%= ord.order_status %></td>
             </tbody>
         <% end %>
       </table>
+    <% end %>
+    <% if @orders.present? %> 
+      <div class="pull-right"><h3>計　<%= @total_prices.floor %>円</h3></div>
     <% end %>
   </div>
 </div>

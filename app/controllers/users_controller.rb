@@ -87,10 +87,10 @@ class UsersController < ApplicationController
         end
       end
     end
-    redirect_to order_consent_user_url(@user)
+    redirect_to designs_url
   rescue ActiveRecord::RecordInvalid
     flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
-    redirect_to order_consent_user_url
+    redirect_to designs_url
   end
   
   
@@ -111,10 +111,10 @@ class UsersController < ApplicationController
         end
       end
     end
-    redirect_to order_sending_user_url(@user)
+    redirect_to designs_url
   rescue ActiveRecord::RecordInvalid
     flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
-    redirect_to order_sending_user_url(@user)
+    redirect_to designs_url
   end
   
   
@@ -135,10 +135,10 @@ class UsersController < ApplicationController
         end
       end
     end
-    redirect_to order_receiving_user_url(@user)
+    redirect_to designs_url
   rescue ActiveRecord::RecordInvalid
     flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
-    redirect_to order_receiving_user_url(@user)
+    redirect_to designs_url
   end
   
   

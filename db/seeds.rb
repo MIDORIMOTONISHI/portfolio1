@@ -150,23 +150,5 @@ Design.create!(title: "ハロウィンマリン",
 Design.create!(title: "ハロウィンクジラッキー",
              type: "季節-秋",
              machine: "海物語",
-             user_id: "2",
+             user_id: "3",
              image: open("./public/user_images/aki02.jpg"))
-             
-Design.create!(title: "似顔絵　森本緑",
-             type: "似顔絵",
-             machine: "",
-             user_id: "2",
-             image: open("./public/user_images/midori.jpg"))
-             
-Design.create!(title: "似顔絵　松村直晶",
-             type: "似顔絵",
-             machine: "",
-             user_id: "2",
-             image: open("./public/user_images/naoaki.jpg"))
-             
-Design.create!(title: "似顔絵　青木晴子",
-             type: "似顔絵",
-             machine: "",
-             user_id: "2",
-             image: open("./public/user_images/haruko.jpg"))
